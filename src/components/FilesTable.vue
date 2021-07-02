@@ -7,7 +7,7 @@
         <th>Date</th>
         <th>Actions</th>
       </tr>
-      <tr v-for="(file, index) in dfiles.data" v-bind:key="index">
+      <tr v-for="(file, index) in dfiles" v-bind:key="index">
         <td>{{ file.file }}</td>
         <td>{{ file.size }}</td>
         <td>{{ file.mtime }}</td>
@@ -45,7 +45,7 @@ export default {
                       token: getAuthToken()
                   }
               });
-      this.dfiles = response.data;
+      this.dfiles = response.data.data.files;
     }
   },
 };
