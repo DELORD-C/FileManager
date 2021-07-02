@@ -1,20 +1,25 @@
 <template>
   <div id="app">
     <Nav/>
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <FilesTable />
+
     <router-view/>
   </div>
 </template>
 
 <script>
 import Nav from './components/Nav'
+import FilesTable from "./components/FilesTable.vue";
 
 export default {
+  name: "App",
   components: {
-    Nav
+    Nav,
+    FilesTable,
   },
-}
+};
 </script>
-
 
 <style>
 #app {
