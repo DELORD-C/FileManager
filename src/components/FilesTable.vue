@@ -24,7 +24,7 @@
 
 <script>
 import axios from "axios";
-import { getUserInfo } from '../utils/auth';
+import { getAuthToken, getUserInfo } from '../utils/auth';
 export default {
   name: "FilesTable",
   data() {
@@ -42,7 +42,7 @@ export default {
                   url: "http://localhost:3000/ls",
                   method: 'POST',
                   data: {
-                      username: user.username
+                      token: getAuthToken()
                   }
               });
       this.dfiles = response.data;
