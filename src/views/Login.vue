@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { loginUser, setAuthToken, isLoggedIn } from '../utils/auth'
+import { loginUser, setAuthToken } from '../utils/auth'
 
 export default {
   name: 'Login',
@@ -32,8 +32,6 @@ export default {
       try {
         loginUser(this.username, this.password).then((res) => {
           setAuthToken(res.data.access_token)
-          console.log(isLoggedIn());
-
           this.$router.push('/')
         })
       }
