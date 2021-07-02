@@ -34,15 +34,19 @@ export default {
   },
   async mounted() {
     let user = getUserInfo();
-    console.log(user);
-    const response = await axios({
-                url: "http://localhost:3000/ls",
-                method: 'POST',
-                data: {
-                    username: user.username
-                }
-            });
-    this.dfiles = response.data;
+    if (!user) {
+      this.$router.push('/login');
+    }
+    else {
+      const response = await axios({
+                  url: "http://localhost:3000/ls",
+                  method: 'POST',
+                  data: {
+                      username: user.username
+                  }
+              });
+      this.dfiles = response.data;
+    }
   },
 };
 </script>
