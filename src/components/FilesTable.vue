@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div v-if="dfiles" class="table">
     <table>
       <tr>
         <th>Name</th>
@@ -24,11 +24,13 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "FilesTable",
   data() {
     return {
-      dfiles: [
+      dfiles: [],
+      didfiles: [
         {
           path: "photos/summer/june/windsurf.jpg",
           name: "windsurf.jpg",
@@ -66,6 +68,11 @@ export default {
     };
   },
   props: {},
+  async mounted() {
+    const response = await axios.get("http://localhost:3000/ls");
+    console.log(response);
+    this.dfiles = response.data;
+  },
 };
 </script>
 

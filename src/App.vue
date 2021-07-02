@@ -1,21 +1,18 @@
 <template>
   <div id="app">
-    <Nav/>
-    <FilesTable />
+    <Nav />
 
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Nav from './components/Nav'
-import FilesTable from "./components/FilesTable.vue";
+import Nav from "./components/Nav";
 
 export default {
   name: "App",
   components: {
     Nav,
-    FilesTable,
   },
 };
 </script>
