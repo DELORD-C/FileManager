@@ -7,15 +7,14 @@
         <th>Date</th>
         <th>Actions</th>
       </tr>
-      <tr v-for="file in dfiles" :key="file.name">
-        <td>{{ file.name }}</td>
+      <tr v-for="(file, index) in dfiles.data" v-bind:key="index">
+        <td>{{ file.file }}</td>
         <td>{{ file.size }}</td>
-        <td>{{ file.date }}</td>
+        <td>{{ file.mtime }}</td>
         <td>
           <button>VIEW</button>
           <button>RENAME</button>
           <button>DELETE</button>
-
           <button>DOWNLOAD</button>
         </td>
       </tr>
@@ -25,52 +24,24 @@
 
 <script>
 import axios from "axios";
+import { getUserInfo } from '../utils/auth';
 export default {
   name: "FilesTable",
   data() {
     return {
-      dfiles: [],
-      didfiles: [
-        {
-          path: "photos/summer/june/windsurf.jpg",
-          name: "windsurf.jpg",
-          size: 400,
-          type: "file",
-          extension: ".jpg",
-        },
-        {
-          path: "photos/winter",
-          name: "winter",
-          size: 200,
-          type: "directory",
-        },
-        {
-          path: "photos/winter/january",
-          name: "january",
-          size: 200,
-          type: "directory",
-        },
-        {
-          path: "photos/winter/january/ski.png",
-          name: "ski.png",
-          size: 100,
-          type: "file",
-          extension: ".png",
-        },
-        {
-          path: "photos/winter/january/snowboard.jpg",
-          name: "snowboard.jpg",
-          size: 100,
-          type: "file",
-          extension: ".jpg",
-        },
-      ],
+      dfiles: []
     };
   },
-  props: {},
   async mounted() {
-    const response = await axios.get("http://localhost:3000/ls");
-    console.log(response);
+    let user = getUserInfo();
+    console.log(user);
+    const response = await axios({
+                url: "http://localhost:3000/ls",
+                method: 'POST',
+                data: {
+                    username: user.username
+                }
+            });
     this.dfiles = response.data;
   },
 };
