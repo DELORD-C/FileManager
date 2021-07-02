@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
     }
   },
   methods: {
@@ -33,6 +33,7 @@ export default {
         loginUser(this.username, this.password).then((res) => {
           setAuthToken(res.data.access_token)
           this.$router.push('/')
+          location.reload()
         })
       }
       catch (err) {
