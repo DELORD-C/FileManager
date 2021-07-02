@@ -20,7 +20,7 @@
 import { loginUser } from '../utils/auth'
 
 export default {
-  name: 'login',
+  name: 'Login',
   data() {
     return {
       username: '',
