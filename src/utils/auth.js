@@ -5,9 +5,9 @@ const REST_ENDPOINT = 'http://localhost:3000/'
 const AUTH_TOKEN_KEY = 'authToken'
 
 export function loginUser(username, password) {
-    return async(resolve, reject) => {
+    return new Promise((resolve, reject) => {
         try {
-            let res = await axios({
+            let res = axios({
                 url: `${REST_ENDPOINT}login`,
                 method: 'POST',
                 data: {
@@ -17,14 +17,13 @@ export function loginUser(username, password) {
                 }
             })
 
-            setAuthToken(res.data.access_token)
-            resolve()
+            resolve(res)
         }
         catch (err) {
             console.error('Caught an error during login: ', err);
             reject(err)
         }
-    }
+    })
 }
 
 export function logoutUser() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <form @submit.prevent="login" class="login">
     <h1>Login Page</h1>
 
     <div class="input-group">
@@ -11,13 +11,13 @@
       <input type="password" v-model="password">
     </div>
 
-    <button type="button" v-on:click="login">Login</button>
+    <button type="submit">Login</button>
 
-  </div>
+  </form>
 </template>
 
 <script>
-import { loginUser } from '../utils/auth'
+import { loginUser, setAuthToken, isLoggedIn } from '../utils/auth'
 
 export default {
   name: 'Login',
@@ -30,8 +30,12 @@ export default {
   methods: {
     async login() {
       try {
-        loginUser(this.username, this.password)
-        this.$router.push('/')
+        loginUser(this.username, this.password).then((res) => {
+          setAuthToken(res.data.access_token)
+          console.log(isLoggedIn());
+
+          this.$router.push('/')
+        })
       }
       catch (err) {
         console.log(err)

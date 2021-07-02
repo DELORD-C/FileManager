@@ -5,7 +5,11 @@
 </template>
 
 <script>
+// import { isLoggedIn } from '../utils/auth'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  methods: {
+  }
 }
 </script>
