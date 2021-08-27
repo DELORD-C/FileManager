@@ -57,7 +57,7 @@
           <button v-if="file.ext == '.jpg'" class='actionBtn view' v-on:click="showImg(file.download)"><img src='../assets/view.png' alt='VIEW'></button>
           <button v-if="file.ext == '.jpeg'" class='actionBtn view' v-on:click="showImg(file.download, event)"><img src='../assets/view.png' alt='VIEW'></button>
           <button class='actionBtn rename'><img src='../assets/rename.png' alt='RENAME'></button>
-          <button :id="file.id" class='actionBtn delete'><img src='../assets/delete.png' v-on:click="deleteFile(file.id, file.download)" alt='DELETE'></button>
+          <button :id="file.id" class='actionBtn delete'><img src='../assets/delete.png' v-on:click="deleteFile(file.path)" alt='DELETE'></button>
           <a target='_BLANK' :href="file.download" class='actionBtn download'><img src='../assets/download.png' alt='DOWNLOAD'></a>
         </td>
       </tr>
@@ -99,16 +99,19 @@ export default {
       document.getElementById('popup').style.opacity = "1";
       document.getElementById('popup').style.pointerEvents = "all";
     },
-    deleteFile: function(id, url) {
-      document.getElementById(id).remove();
-      // const response = await axios({
-      //   url: "http://localhost:3000/rm?cwd=" + url,
-      //   method: 'POST',
-      //   data: {
-      //       token: getAuthToken()
-      //   }
-      // });
-      console.log(url);
+    deleteFile: function(url) {
+      if (confirm('Voulez-vous vraiment supprimer ce fichier ?')) {
+        axios({
+          url: "http://localhost:3000/rm?cwd=" + url,
+          method: 'POST',
+          data: {
+              token: getAuthToken()
+          }
+        });
+        setTimeout(function(){
+          document.location.reload();
+        }, 200)
+      }
     }
   },
   async mounted() {
@@ -136,6 +139,7 @@ export default {
               }
           });
       this.dfiles = response.data.data.files;
+      console.log(this.dfiles);
       const orderArray = (arr, key) => arr.sort((a, b) => a[key] - b[key]);
       const orderArrayRev = (arr, key) => arr.sort((a, b) => b[key] - a[key]);
       await orderArray(this.dfiles, 'file');
